@@ -4,11 +4,12 @@ var db = require("../db");
 var hwDataSchema = new db.Schema({
     deviceId: String,
     userEmail: String,
-    GPSLocation: Number,
+    longitude: Number,
+    latitude: Number,
     GPSSpeed: Number,
     UVReading: Number,
-    Temp: Number,
-    Humd: Number
+    Temperature: Number,
+    Humdity: Number
 });
 
 // Creates a Devices (plural) collection in the db using the device schema

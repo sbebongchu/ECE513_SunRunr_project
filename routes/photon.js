@@ -23,15 +23,27 @@ router.post('/hit', function(req, res, next) {
         return res.status(201).send(JSON.stringify(responseJson));
     }
 
-    if (!req.body.hasOwnProperty("longitude")) {
+    if (!req.body.hasOwnProperty("lon")) {
         responseJson.status = "ERROR";
         responseJson.message = "Request missing longitude parameter.";
         return res.status(201).send(JSON.stringify(responseJson));
     }
 
-    if (!req.body.hasOwnProperty("latitude")) {
+    if (!req.body.hasOwnProperty("lat")) {
         responseJson.status = "ERROR";
         responseJson.message = "Request missing latitude parameter.";
+        return res.status(201).send(JSON.stringify(responseJson));
+    }
+
+    if (!req.body.hasOwnProperty("GPS_speed")) {
+        responseJson.status = "ERROR";
+        responseJson.message = "Request missing GPS speed parameter.";
+        return res.status(201).send(JSON.stringify(responseJson));
+    }
+
+    if (!req.body.hasOwnProperty("uv")) {
+        responseJson.status = "ERROR";
+        responseJson.message = "Request missing uv parameter.";
         return res.status(201).send(JSON.stringify(responseJson));
     }
 
@@ -54,11 +66,12 @@ router.post('/hit', function(req, res, next) {
                 var newHwData = new HwData({
                     deviceId: req.body.deviceId,
                     userEmail: device.userEmail,
-                    GPSLocation: req.body.GPSLocation,
-                    GPSSpeed: req.body.GPSSpeed,
-                    UVReading: req.body.UVReading,
-                    Temp: req.body.Temp,
-                    Humd: req.body.Humd
+                    longitude: req.body.lon,
+                    latitude: req.body.lat,
+                    GPSSpeed: req.body.GPS_speed,
+                    UVReading: req.body.uv,
+                    // Temp: req.body.Temp,
+                    // Humd: req.body.Humd
                 });
 
                 // Save device. If successful, return success. If not, return error message.                          
