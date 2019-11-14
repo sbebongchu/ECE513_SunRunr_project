@@ -1,11 +1,12 @@
 let express = require('express');
 let router = express.Router();
 let Device = require("../models/device");
+var HwData = require("../models/hwdata")
 let fs = require('fs');
 let jwt = require("jwt-simple");
 
 /* Authenticate user */
-var secret = fs.readFileSync(__dirname + '/../../jwtkey').toString();
+var secret = fs.readFileSync(__dirname + '/../jwtkey.txt').toString();
 
 // Function to generate a random apikey consisting of 32 characters
 function getNewApikey() {
@@ -32,13 +33,32 @@ router.get('/status/:devid', function(req, res, next) {
         };
     }
 
-    Device.find(query, function(err, allDevices) {
+    /*Device.find(query, function(err, allDevices) {
         if (err) {
             let errorMsg = { "message": err };
             res.status(400).json(errorMsg);
         } else {
             for (let doc of allDevices) {
-                responseJson.devices.push({ "deviceId": doc.deviceId });
+                responseJson.devices.push({ "deviceId": doc.deviceId, "lastContact": doc.lastContact });
+            }
+        }
+        res.status(200).json(responseJson);
+    });*/
+
+    HwData.find(query, function(err, allDevices) {
+        if (err) {
+            let errorMsg = { "message": err };
+            res.status(400).json(errorMsg);
+        } else {
+            for (let doc of allDevices) {
+                responseJson.devices.push({
+                    "deviceId": doc.deviceId,
+                    "userEmail": device.userEmail,
+                    "longitude": req.query.longitude,
+                    "latitude": req.query.latitude,
+                    "GPSSpeed": req.query.GPSSpeed,
+                    "UVReading": req.query.UVReading
+                });
             }
         }
         res.status(200).json(responseJson);

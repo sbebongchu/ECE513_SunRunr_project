@@ -6,7 +6,8 @@ var potholeSchema = new db.Schema({
     zip:           String,
     lastReported:  { type: Date, default: Date.now },
     firstReported: { type: Date, default: Date.now }*/
-    GPSLocations: { type: [Number] },
+    Longitudes: { type: [Number] },
+    Latitudes: { type: Number },
     GPSSpeeds: { type: [Number] },
     UVReadings: { type: [Number] },
     FitnessTemps: { type: [Number] },

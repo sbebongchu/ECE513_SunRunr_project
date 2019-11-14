@@ -95,4 +95,50 @@ router.post('/hit', function(req, res, next) {
     });
 });
 
+//get all gps locations
+// GET request return one or "all" devices registered and last time of contact.
+router.get('/status/:devid', function(req, res, next) {
+    let deviceId = req.params.devid;
+    let responseJson = { devices: [] };
+
+    if (deviceId == "all") {
+        let query = {};
+    } else {
+        let query = {
+            "deviceId": deviceId
+        };
+    }
+
+    /* Device.find(query, function(err, allDevices) {
+         if (err) {
+             let errorMsg = { "message": err };
+             res.status(400).json(errorMsg);
+         } else {
+             for (let doc of allDevices) {
+                 responseJson.devices.push({ "deviceId": doc.deviceId });
+             }
+         }
+         res.status(200).json(responseJson);
+     });*/
+
+    HwData.find(query, function(err, allDevices) {
+        if (err) {
+            let errorMsg = { "message": err };
+            res.status(400).json(errorMsg);
+        } else {
+            for (let doc of allDevices) {
+                responseJson.devices.push({
+                    "deviceId": doc.deviceId,
+                    "userEmail": device.userEmail,
+                    "longitude": req.query.longitude,
+                    "latitude": req.query.latitude,
+                    "GPSSpeed": req.query.GPSSpeed,
+                    "UVReading": req.query.UVReading
+                });
+            }
+        }
+        res.status(200).json(responseJson);
+    });
+});
+
 module.exports = router;
