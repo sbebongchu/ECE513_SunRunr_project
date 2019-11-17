@@ -1,0 +1,62 @@
+
+
+.logo {
+    
+    width: 40px;
+    height: 40px;
+}
+#logo1 {
+    margin-left: 30%;
+    width: 40px;
+    height: 40px;
+}
+#logo2 {
+    /*margin-left: 5%;*/
+    width: 40px;
+    height: 40px;
+}
+#siteName {
+    padding: 15px;
+    /*margin-left: 25%; */
+    font-size: 32pt;
+    vertical-align: top;
+    font-family: bold italic;
+    color: white;
+
+}
+.nameAndLogo {
+  background-color: #CCCC00;
+  position: relative;
+
+}
+.signIn0{
+  margin: 5%;
+  width: 15vw;
+  top: 50%;
+  left: 50%;
+  margin-right: -50%;
+}
+.signIn{
+  background-color: #CCCC00;
+}
+
+.card {
+  background-color: #CCCC00;
+  width: 20vw;
+}
+#account{
+  color: white;
+}
+
+#password{
+  color: white;
+}
+#email{
+  color: white;
+} 
+
+button {
+  background-color: red;
+  color: white;
+  margin: 20%;
+}
