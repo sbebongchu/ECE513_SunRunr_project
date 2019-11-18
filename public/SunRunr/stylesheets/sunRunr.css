@@ -1,5 +1,8 @@
-
-
+html{
+    font-size: 15pt;
+    color: white;
+    font-style: inherit;
+}
 .logo {
     
     width: 40px;
@@ -27,6 +30,7 @@
 .nameAndLogo {
   background-color: #CCCC00;
   position: relative;
+  width: 100vw;
 
 }
 
@@ -45,9 +49,62 @@
 #email{
   color: white;
 } 
+.signIn0{
+  margin-left: 40%;
+  margin-top: 20%;
+  width: 50vw;
+  height: 20vw;
+  padding-top: 10px;
+  background-color: #CCCC01;
+}
+.signIn0 span{
+  margin-left: 40%;
+  margin-top: 20%;
 
+}
+.noAccount{
+  margin-left: 1%;
+  margin-top: 00%;
+}
+
+.signup0{
+  margin-left: 40%;
+  margin-top: 20%;
+  width: 50vw;
+  height: 20vw;
+  padding-top: 10px;
+  background-color: #CCCC01;
+}
 button {
   background-color: red;
   color: white;
-  margin: 20%;
+  margin-left: 75%;
+  width: 20%;
 }
+.signIn input {
+  margin-top: 5%;
+  width: 60%;
+  color: white;
+  background-color:#CCCC01;
+  border: none;  
+  font-size: 15pt;
+  padding: 1%;
+
+}
+
+.signup input {
+  margin-top: 0.5%;
+  width: 60%;
+  color: white;
+  background-color:#CCCC01;
+  border: none;  
+  font-size: 12pt;
+  padding: 1%;
+
+}
+
+::placeholder {
+  color: White;
+
+}
+
