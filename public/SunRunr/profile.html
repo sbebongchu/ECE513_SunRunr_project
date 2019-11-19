@@ -14,6 +14,7 @@
     
     <link href="/SunRunr/stylesheets/sunRunr.css" rel="stylesheet">
     <script src="/SunRunr/javascripts/signout.js"></script>
+    <script src="/SunRunr/javascripts/profile.js"></script>
 
     <!--Let browser know website is optimized for mobile-->
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -34,19 +35,29 @@
                 <div></div>
             </div> 
         </div>
-        <div class="profile">
+        <div>
             <ul class="w3-ul w3-border">
-              <li><h2>Info</h2></li>
-              <li>Name: Abdikadir Tasir</li>
-              <li>Email:</li>
+                <li>
+                  <h5>Account Info</h5>
+                </li>
+                <li >Email: <span id="email"></span></li>
+                <li>Name: <span id="fullName"></span></li>
+                <li>Last Access: <span id="lastAccess"></span></li>
             </ul>
-            <ul class="w3-ul w3-border">
-              <li><h2>Devices</h2></li>
-              <li>Device 1</li>
-              <li>Device 2</li>
-            </ul>  
-            <button type="button" id="addDevice"><a href="addDevice.html">Add New Device</a></button>
-        </div>     
+            <ul class="w3-ul w3-border" id="devices">
+                <li >
+                    <h5>Devices</h5>
+                </li>
+                <li id="addDeviceForm">
+                    <label for="deviceId">New Device ID:</label>
+                    <input type="text" id="deviceId" name="deviceId" col="30">
+                    <button id="registerDevice">Register</button>
+                    <button id="cancel" >Cancel</button>
+                </li>
+                <li id="addDeviceControl"><a href="#!" id="addDevice">Add Device</a></li>
+            </ul>
+            <divid="error"></div>
+        </div>    
     </body>
 
 </html>
