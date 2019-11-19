@@ -1,42 +1,40 @@
 html{
-    font-size: 15pt;
+    font-size: 100%;
     color: white;
     font-style: inherit;
-}
-.logo {
-    
-    width: 40px;
-    height: 40px;
+    align-content: center;
+    background-color: lightgrey;
 }
 #logo1 {
-    margin-left: 30%;
-    width: 40px;
-    height: 40px;
+    margin:0% 0% 0% 0%;
+    padding: none;
+    width: 3%;
 }
 #logo2 {
-    /*margin-left: 5%;*/
-    width: 40px;
-    height: 40px;
+    padding: none;
+    width: 5%;
 }
 #siteName {
-    padding: 15px;
-    /*margin-left: 25%; */
-    font-size: 32pt;
-    vertical-align: top;
+    padding: 2% 0% 0% 0%;
+    font-size: 200%;
     font-family: bold italic;
     color: white;
+    margin: 0;
 
 }
 .nameAndLogo {
-  background-color: #CCCC00;
+  padding: none;
+  background-color: #f9a825;
   position: relative;
   width: 100vw;
+  align-content: center;
+  float: left;
 
 }
 
 
 .card {
-  background-color: #CCCC00;
+  background-color: #f9a825;
   width: 20vw;
 }
 #account{
@@ -50,61 +48,95 @@ html{
   color: white;
 } 
 .signIn0{
-  margin-left: 40%;
-  margin-top: 20%;
+  position: absolute;
+  top: 25vw;
+  left: 25vw;
   width: 50vw;
   height: 20vw;
-  padding-top: 10px;
-  background-color: #CCCC01;
+  background-color: #f9a825;
+  border-radius: 2vw;
+  box-shadow: 0.1vw 0.1vw grey;
 }
 .signIn0 span{
   margin-left: 40%;
   margin-top: 20%;
 
 }
-.noAccount{
-  margin-left: 1%;
-  margin-top: 00%;
-}
-
-.signup0{
-  margin-left: 40%;
-  margin-top: 20%;
-  width: 50vw;
-  height: 20vw;
-  padding-top: 10px;
-  background-color: #CCCC01;
-}
-button {
-  background-color: red;
-  color: white;
-  margin-left: 75%;
-  width: 20%;
-}
 .signIn input {
   margin-top: 5%;
+  margin-left: 1%;
   width: 60%;
   color: white;
-  background-color:#CCCC01;
-  border: none;  
-  font-size: 15pt;
+  background-color: #f9a825;
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  border-color: white;
+  border-bottom-width: 2%;   
+  font-size: 100%;
   padding: 1%;
+
 
 }
 
-.signup input {
-  margin-top: 0.5%;
-  width: 60%;
-  color: white;
-  background-color:#CCCC01;
-  border: none;  
-  font-size: 12pt;
-  padding: 1%;
-
+.account{
+  margin-left: 1%;
+  margin-top: 0%;
 }
 
 ::placeholder {
   color: White;
 
 }
+.signup0{
+  position: absolute;
+  top: 10vw;
+  left: 25vw;
+  width: 50vw;
+  height: 45vw;
+  background-color: #f9a825;
+  border-radius: 2vw;
+  box-shadow: 0.1vw 0.1vw grey;
+}
+.signup0 span{
+  margin-left: 40%;
+  margin-top: 20%;
+
+}
+.signup input {
+  margin-top: 5%;
+  margin-left: 1%;
+  width: 60%;
+  color: white;
+  background-color: #f9a825;
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  border-color: white;
+  border-bottom-width: 2%;   
+  font-size: 100%;
+  padding: 1%;
+}
+
+button {
+  color: white;
+  margin:20px 0px 2px 400px;
+  border-radius:12px;
+  box-sizing: border-box;
+  width: 20%;
+  font-family:'Roboto',sans-serif;
+  font-weight:300;
+  color:#FFFFFF;
+  background-color:#b71c1c;
+  height: 30px;
+  box-shadow:inset 0 -0.6em 1em -0.35em rgba(0,0,0,0.17),inset 0 0.6em 2em -0.3em rgba(255,255,255,0.15),inset 0 0 0em 0.05em rgba(255,255,255,0.12);
+}
+
+.dropdown{
+  float: right;
+}
+
+
+
+
 
