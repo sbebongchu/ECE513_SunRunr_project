@@ -1,7 +1,8 @@
 function sendRegisterRequest() {
   let email = $('#email').val();
   let password = $('#password').val();
-  let fullName = $('#fullName').val();
+  let firstName = $('#firstName').val();
+  let lastName = $('#lastName').val();
   let passwordConfirm = $('#passwordConfirm').val();
   
   // Check to make sure the passwords match
