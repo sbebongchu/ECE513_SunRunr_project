@@ -1,6 +1,6 @@
 function sendReqForAccountInfo() {
     $.ajax({
-            url: '/users/account',
+            url: 'http://ec2-18-223-182-143.us-east-2.compute.amazonaws.com:3000/users/account',
             type: 'GET',
             headers: { 'x-auth': window.localStorage.getItem("authToken") },
             dataType: 'json'
@@ -42,7 +42,7 @@ function accountInfoError(jqXHR, textStatus, errorThrown) {
 // Registers the specified device with the server.
 function registerDevice() {
     $.ajax({
-            url: '/devices/register',
+            url: 'http://ec2-18-223-182-143.us-east-2.compute.amazonaws.com:3000/devices/register',
             type: 'POST',
             headers: { 'x-auth': window.localStorage.getItem("authToken") },
             contentType: 'application/json',
@@ -69,7 +69,7 @@ function registerDevice() {
 
 function pingDevice(event, deviceId) {
     $.ajax({
-        url: '/devices/ping',
+        url: 'http://ec2-18-223-182-143.us-east-2.compute.amazonaws.com:3000/devices/ping',
         type: 'POST',
         headers: { 'x-auth': window.localStorage.getItem("authToken") },
         data: { 'deviceId': deviceId },
@@ -84,6 +84,16 @@ function pingDevice(event, deviceId) {
         }
     });
 }
+/*function getActivities() {
+    $.ajax({
+      url: 'http://ec2-18-223-182-143.us-east-2.compute.amazonaws.com:3000/devices/status/devid',
+      type: 'GET',
+      headers: { 'x-auth': window.localStorage.getItem("authToken") },
+      dataType: 'json'
+    })
+      .done(displayMostRecentPothole)
+      .fail(recentPotholeError);
+  }*/
 
 // Show add device form and hide the add device button (really a link)
 function showAddDeviceForm() {

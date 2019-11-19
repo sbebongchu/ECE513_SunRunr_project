@@ -33,7 +33,8 @@ router.get('/status/:devid', function(req, res, next) {
         };
     }
 
-    /*Device.find(query, function(err, allDevices) {
+    // Device.find(query, function(err, allDevices) {
+    /*Device.find({ deviceId: req.params.devid }, function(err, allDevices) {
         if (err) {
             let errorMsg = { "message": err };
             res.status(400).json(errorMsg);
@@ -45,20 +46,26 @@ router.get('/status/:devid', function(req, res, next) {
         res.status(200).json(responseJson);
     });*/
 
-    HwData.find(query, function(err, allDevices) {
+    HwData.find({ deviceId: req.params.devid }, function(err, allDevices) {
         if (err) {
             let errorMsg = { "message": err };
             res.status(400).json(errorMsg);
         } else {
+            let x = 0;
             for (let doc of allDevices) {
                 responseJson.devices.push({
                     "deviceId": doc.deviceId,
-                    "userEmail": device.userEmail,
-                    "longitude": req.query.longitude,
-                    "latitude": req.query.latitude,
-                    "GPSSpeed": req.query.GPSSpeed,
-                    "UVReading": req.query.UVReading
+                    "userEmail": Device.userEmail,
+                    "longitude": doc.longitude,
+                    "latitude": doc.latitude,
+                    "GPSSpeed": doc.GPSSpeed,
+                    "UVReading": doc.UVReading
                 });
+                x = x + 1;
+                if (x == 10) {
+                    break;
+                }
+
             }
         }
         res.status(200).json(responseJson);
