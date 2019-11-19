@@ -17,7 +17,7 @@ function sendRegisterRequest() {
    url: '/users/register',
    type: 'POST',
    contentType: 'application/json',
-   data: JSON.stringify({email:email, fullName:fullName, password:password}),
+   data: JSON.stringify({email:email, firstName:firstName, lastName:lastName, password:password}),
    dataType: 'json'
   })
     .done(registerSuccess)
@@ -40,7 +40,7 @@ function registerError(jqXHR, textStatus, errorThrown) {
     $('#ServerResponse').show();
   }
   else {
-    $('#ServerResponse').html("<span class='red-text text-darken-2'>Error: " + jqXHR.responseJSON.message + "</span>");
+    $('#ServerResponse').html("<span class='red-text text-darken-2'> Couldn't register due to " + jqXHR.responseJSON.message + " error.</span>");
     $('#ServerResponse').show();
   }
 }
