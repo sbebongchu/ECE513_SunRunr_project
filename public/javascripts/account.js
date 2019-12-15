@@ -5,8 +5,8 @@ function sendReqForAccountInfo() {
             headers: { 'x-auth': window.localStorage.getItem("authToken") },
             dataType: 'json'
         })
-        .done(accountInfoSuccess)
-        .fail(accountInfoError);
+        .done(accountInfoSuccess);
+    .fail(accountInfoError);
 }
 
 function accountInfoSuccess(data, textSatus, jqXHR) {
