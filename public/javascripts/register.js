@@ -42,6 +42,52 @@ function registerError(jqXHR, textStatus, errorThrown) {
     }
 }
 
+function signinInfo() {
+    $("#error2").hide()
+    let password = $('#password').val();
+    let passwordConfirm = $("passwordConfirm").val();
+    let fullname = $("#fullName").val();
+    let email = $("#email").val();
+
+    let re1 = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,5}$/
+    let re2 = /[a-z]+/;
+    let re3 = /[A-Z]+/;
+    let re4 = /\d+/;
+    let info = "<ul class='collection with-header'>"
+
+    if ((fullname.length) < 1) {
+        info += "<li>Missing full name. </li>";
+
+    }
+    if (re1.exec(email) === null) {
+
+        info += "<li>Invalid or missing email address.</li>";
+
+    }
+    if (password.length < 8 || password.length > 20) {
+        info += "<li class='collection-item'> Password must be at least 8 characters</li>"
+    }
+    if (re2.exec(password) === null) {
+        info += "<li class='collection-item'> Password must contain at least one lowercase character</li>"
+    }
+    if (re3.exec(password) === null) {
+        info += "<li class='collection-item'> Password must contain at least one uppercase character</li>"
+    }
+    if (re4.exec(password) === null) {
+        info += "<li class='collection-item'> Password must contain at least one digit character</li>"
+    }
+    if (info.length > 25) {
+        $("#error2").html(info + "</ul>")
+        $("#error2").show()
+    }
+    if (password !== passwordConfirm) {
+
+        info += "<li>Password and confirmation password don't match.</li>";
+
+    } else {
+        sendRegisterRequest()
+    }
+}
 $(function() {
-    $('#signup').click(sendRegisterRequest);
+    $('#signup').click(signinInfo);
 });

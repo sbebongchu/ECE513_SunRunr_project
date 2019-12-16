@@ -8,8 +8,9 @@ var hwDataSchema = new db.Schema({
     latitude: Number,
     GPSSpeed: Number,
     UVReading: Number,
-    Temperature: Number,
-    Humdity: Number
+    Temp: Number,
+    Humd: Number,
+    activityType: String
 });
 
 // Creates a Devices (plural) collection in the db using the device schema
