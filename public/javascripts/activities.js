@@ -2,6 +2,8 @@ function getActivities2() {
     $("#walk").hide()
     $("#run").hide()
     $("#bike").hide()
+    $("#uv").hide()
+    $("activities").hide()
     let data = JSON.parse(window.localStorage.getItem("activityData"))
         //activityData = []
     let walk = "<ul class='collection with-header'> "
@@ -46,10 +48,22 @@ function getActivities2() {
     });
 
     $("#running").click(function(event) {
-        $("run").toggle()
+        $("#run").toggle()
     });
     $("#biking").click(function(event) {
-        $("bike").toggle()
+        $("#bike").toggle()
+
+    });
+
+
+
+
+    $("#act").click(function(event) {
+        $("#activities").toggle()
+
+    });
+    $("#uvReading").click(function(event) {
+        $("uv").toggle()
 
     });
 
