@@ -13,7 +13,7 @@ function sendRegisterRequest() {
     // }
 
     $.ajax({
-            url: 'http://ec2-18-223-182-143.us-east-2.compute.amazonaws.com:3000/users/register',
+            url: 'http://ec2-13-58-224-26.us-east-2.compute.amazonaws.com:3000/users/register',
             type: 'POST',
             contentType: 'application/json',
             data: JSON.stringify({ email: email, fullName: fullName, password: password }),
