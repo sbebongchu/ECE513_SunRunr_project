@@ -2,7 +2,6 @@ let express = require('express');
 let router = express.Router();
 let Device = require("../models/device");
 var HwData = require("../models/hwdata")
-var User = require("../models/users")
 let fs = require('fs');
 let jwt = require("jwt-simple");
 
@@ -24,7 +23,7 @@ function getNewApikey() {
 // GET request return one or "all" devices registered and last time of contact.
 router.get('/status/:devid', function(req, res, next) {
     let deviceId = req.params.devid;
-    let responseJson = { activities: [] };
+    let responseJson = { devices: [] };
 
     if (deviceId == "all") {
         let query = {};
@@ -34,6 +33,18 @@ router.get('/status/:devid', function(req, res, next) {
         };
     }
 
+    // Device.find(query, function(err, allDevices) {
+    /*Device.find({ deviceId: req.params.devid }, function(err, allDevices) {
+        if (err) {
+            let errorMsg = { "message": err };
+            res.status(400).json(errorMsg);
+        } else {
+            for (let doc of allDevices) {
+                responseJson.devices.push({ "deviceId": doc.deviceId, "lastContact": doc.lastContact });
+            }
+        }
+        res.status(200).json(responseJson);
+    });*/
 
     HwData.find({ deviceId: req.params.devid }, function(err, allDevices) {
         if (err) {
@@ -42,22 +53,19 @@ router.get('/status/:devid', function(req, res, next) {
         } else {
             let x = 0;
             for (let doc of allDevices) {
-                responseJson.activities.push({
+                responseJson.devices.push({
                     "deviceId": doc.deviceId,
-                    "userEmail": doc.userEmail,
+                    "userEmail": Device.userEmail,
                     "longitude": doc.longitude,
                     "latitude": doc.latitude,
                     "GPSSpeed": doc.GPSSpeed,
-                    "UVReading": doc.UVReading,
-                    "Temp": doc.Temp,
-                    "Humd": doc.Humd,
-                    "actType": doc.actType
+                    "UVReading": doc.UVReading
                 });
 
 
             }
         }
-        return res.status(200).json(responseJson);
+        res.status(200).json(responseJson);
     });
 });
 
@@ -108,93 +116,31 @@ router.post('/register', function(req, res, next) {
             // responseJson.message = "Device ID " + req.body.deviceId + " already registered.";
             // return res.status(400).json(responseJson);
         } else {
+            // Get a new apikey
+            deviceApikey = getNewApikey();
 
-            User.findOne({ email: email }, function(err, user) {
-                if (user !== null) {
+            // Create a new device with specified id, user email, and randomly generated apikey.
+            let newDevice = new Device({
+                deviceId: req.body.deviceId,
+                userEmail: email,
+                apikey: deviceApikey
+            });
 
-                    // let errorMsg = { "message": "test" };
-                    // return res.status(200).json(errorMsg);
-
-                    deviceApikey = getNewApikey();
-
-                    user.userDevices.push(req.body.deviceId)
-                    user.save(function(err, user) {
-                        if (err) {
-                            responseJson.message = err;
-                            // This following is equivalent to: res.status(400).send(JSON.stringify(responseJson));
-                            return res.status(400).json(responseJson);
-                        } else {
-
-
-
-                            let newDevice = new Device({
-                                deviceId: req.body.deviceId,
-                                userEmail: email,
-                                apikey: deviceApikey
-                            });
-
-                            // Save device. If successful, return success. If not, return error message.
-                            newDevice.save(function(err, newDevice) {
-                                if (err) {
-                                    responseJson.message = err;
-                                    // This following is equivalent to: res.status(400).send(JSON.stringify(responseJson));
-                                    return res.status(400).json(responseJson);
-                                } else {
-                                    responseJson.registered = true;
-                                    responseJson.apikey = deviceApikey;
-                                    responseJson.deviceId = req.body.deviceId;
-                                    responseJson.message = "Device ID " + req.body.deviceId + " was registered.";
-                                    return res.status(201).json(responseJson);
-                                }
-                            });
-                        }
-                    })
-
-                    // Create a new device with specified id, user email, and randomly generated apikey.
-
-
+            // Save device. If successful, return success. If not, return error message.
+            newDevice.save(function(err, newDevice) {
+                if (err) {
+                    responseJson.message = err;
+                    // This following is equivalent to: res.status(400).send(JSON.stringify(responseJson));
+                    return res.status(400).json(responseJson);
                 } else {
-
-                    deviceApikey = getNewApikey();
-
-                    user.userDevices.push(deviceId)
-                    user.save(done)
-
-                    // Create a new device with specified id, user email, and randomly generated apikey.
-                    let newDevice = new Device({
-                        deviceId: req.body.deviceId,
-                        userEmail: email,
-                        apikey: deviceApikey
-                    });
-
-                    // Save device. If successful, return success. If not, return error message.
-                    newDevice.save(function(err, newDevice) {
-                        if (err) {
-                            responseJson.message = err;
-                            // This following is equivalent to: res.status(400).send(JSON.stringify(responseJson));
-                            return res.status(400).json(responseJson);
-                        } else {
-                            responseJson.registered = true;
-                            responseJson.apikey = deviceApikey;
-                            responseJson.deviceId = req.body.deviceId;
-                            responseJson.message = "Device ID " + req.body.deviceId + " was registered.";
-                            return res.status(201).json(responseJson);
-                        }
-                    });
-
-
+                    responseJson.registered = true;
+                    responseJson.apikey = deviceApikey;
+                    responseJson.deviceId = req.body.deviceId;
+                    responseJson.message = "Device ID " + req.body.deviceId + " was registered.";
+                    return res.status(201).json(responseJson);
                 }
-            })
-
-
-
-
+            });
         }
-
-
-        // Get a new apikey
-
-
     });
 });
 

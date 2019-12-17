@@ -16,7 +16,7 @@
 
     <link href="stylesheets/sunRunr.css" rel="stylesheet">
 
-    <script src="javascripts/activities.js"></script>
+    <!-- <script src="javascripts/activities.js"></script> -->
     <script src="javascripts/signout.js"></script>
 
 
@@ -27,9 +27,9 @@
 <body>
     <!-- Dropdown Structure -->
     <!-- Dropdown Structure -->
+
     <ul id='dropdown1' class='dropdown-content'>
         <li><a href="http://ec2-18-223-182-143.us-east-2.compute.amazonaws.com:3000/account.html">Home</a></li>
-
         <li class="divider"></li>
         <li><a href="#!" id="signout">Sign out</a></li>
     </ul>
@@ -42,13 +42,14 @@
             </ul>
         </div>
     </nav>
+
     <div class="profile">
-        <ul class="collection with-header" id="uv">
+        <ul class="collection with-header">
             <li class="collection-header">
                 <!-- <div class="center-align">UV Reading for the next five days </div> -->
-                <button id="uvReading" class="waves-effect waves-light btn">UV Reading for the next five days</button>
+                <button id="uvReading" class="waves-effect waves-teal btn">5 Days UV_Reading</button>
             </li>
-            <li class="collection-item">
+            <li class="collection-item" id="uv">
                 <table class="centered">
                     <thead>
                         <tr>
@@ -88,26 +89,28 @@
 
 
 
-        <ul class="collection with-header" id="activities">
+        <ul class="collection with-header">
 
 
 
             <li class="collection-header">
-                <button id="act" class="waves-effect waves-light btn">Activities</button>
+                <button id="act" class="waves-effect waves-teal btn">Activities</button>
             </li>
-            <li class="collection-item">
-                <button id="walking" class="waves-effect waves-light btn">Walking</button>
-                <div id="walk"></div>
-            </li>
+            <ul id="activities">
+                <li class="collection-item">
+                    <button id="walking" class="waves-effect waves-light btn">Walking</button>
+                    <div id="walk"></div>
+                </li>
 
-            <li class="collection-item">
-                <button id="running" class="waves-effect waves-light btn">Running</button>
-                <div id="run"></div>
-            </li>
-            <li class="collection-item">
-                <button id="biking" class="waves-effect waves-light btn">Biking</button>
-                <div id="bike"></div>
-            </li>
+                <li class="collection-item">
+                    <button id="running" class="waves-effect waves-light btn">Running</button>
+                    <div id="run"></div>
+                </li>
+                <li class="collection-item">
+                    <button id="biking" class="waves-effect waves-light btn">Biking</button>
+                    <div id="bike"></div>
+                </li>
+            </ul>
         </ul>
     </div>
     <div id="test"></div>

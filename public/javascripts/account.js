@@ -210,18 +210,25 @@ function pingDevice(event, deviceId) {
 
 function getActivities(event, deviceId) {
 
+
     $.ajax({
         url: 'http://ec2-18-223-182-143.us-east-2.compute.amazonaws.com:3000/devices/status/' + deviceId,
         type: 'GET',
         headers: { 'x-auth': window.localStorage.getItem("authToken") },
         dataType: 'json',
         success: function(data, textStatus, jqXHR) {
-            //activity = JSON.stringify(data.activities)
-            //alert(activity[2])
+            // activity = JSON.stringify(data.activities)
+            // alert(activity[2])
+            $("#error").html(data.activities.length);
+            $("#error").show();
+
             for (var i = 0; i < data.activities.length; i++) {
+
                 activity = JSON.stringify(data.activities[i])
                 activityData.push(activity)
             }
+
+
             // $("#data").html(typeof JSON.parse(activityData[0]))
             //act = JSON.parse(activityData[0])
             //$("#data").html(act.GPSSpeed)
@@ -246,69 +253,9 @@ function getActivities(event, deviceId) {
         }
     });
 
-    // })
-    // .done(getActivitiesSuccess)
-    // .fail(getActivitiesFail);
-}
-
-function getActivitiesSuccess(data, textSatus, jqXHR) {
-    window.location = "http://ec2-18-223-182-143.us-east-2.compute.amazonaws.com:3000/activities.html"
-
-
-    let walk = "<ul> <li> some </li>"
-    let run = "<ul>"
-    let bike = "<ul>"
-        // Add the devices to the list before the list item for the add device button (link)
-        // responseJson.devices.push({
-        //     "deviceId": doc.deviceId,
-        //     "userEmail": Device.userEmail,
-        //     "longitude": doc.longitude,
-        //     "latitude": doc.latitude,
-        //     "GPSSpeed": doc.GPSSpeed,
-        //     "UVReading": doc.UVReading
-    for (var activity of data.activities) {
-
-        if (activity.GPSSpeed < 10) {
-            walk += "<li>" +
-                "Longitude: " + activity.longitude + ", Latitude: " + activity.latitude + ", Speed: " + activity.GPSSpeed + ",UV Reading " + activity.UVReading +
-                "</li>";
-        } else if (activity.GPSSpeed > 9 && activity.GPSSpeed < 20) {
-            run += "<li>" +
-                "Longitude: " + activity.longitude + ", Latitude: " + activity.latitude + ", Speed: " + activity.GPSSpeed + ",UV Reading " + activity.UVReading +
-                "</li>";
-        } else {
-            bike += "<li>" + "Longitude: " + activity.longitude + ", Latitude: " + activity.latitude + ", Speed: " + activity.GPSSpeed + ",UV Reading " + activity.UVReading +
-                "</li>";
-        }
-    }
-
-    $("#walking").click(function(event) {
-
-
-
-
-    });
-    $("#running").click(function(event) {
-        $("#run").html(run + "</ul>")
-    });
-    $("#biking").click(function(event) {
-        $("#bike").html(bike + "</ul>")
-    });
-
 }
 
 
-function getActivitiesFail(jqXHR, textStatus, errorThrown) {
-    // If authentication error, delete the authToken 
-    // redirect user to sign-in page (which is index.html)
-    if (jqXHR.status === 401) {
-        window.localStorage.removeItem("authToken");
-        window.location.replace("http://ec2-18-223-182-143.us-east-2.compute.amazonaws.com:3000/index.html");
-    } else {
-        $("#error").html("Error: " + status.message);
-        $("#error").show();
-    }
-}
 
 // Show add device form and hide the add device button (really a link)
 function showAddDeviceForm() {
@@ -339,8 +286,8 @@ function hideAccountUpdateForm() {
         //$('#check').prop('selectedIndex', -1)
         // $('#check option').each(function() {
         //     $(this).val(" ");
-        // });
-    $('select').formselect();
+        //     // });
+        // $('select').formselect();
     $("#updateAccountForm").slideUp()
 
 }

@@ -8,8 +8,8 @@ var hwDataSchema = new db.Schema({
     latitude: Number,
     GPSSpeed: Number,
     UVReading: Number,
-    Temp: Number,
-    Humd: Number,
+    Temp: String,
+    Humd: String,
     actType: String
 });
 

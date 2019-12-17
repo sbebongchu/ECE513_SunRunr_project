@@ -50,89 +50,73 @@ router.post('/hit', function(req, res, next) {
     }
 
     // Find the device and verify the apikey
-    Device.find({ deviceId: req.body.deviceId }, function(err, devices) {
-        if (devices !== null) {
+    Device.findOne({ deviceId: req.body.deviceId }, function(err, device) {
+        if (device !== null) {
+            if (device.apikey != req.body.apikey) {
+                responseJson.status = "ERROR";
+                responseJson.message = "Invalid apikey for device ID " + req.body.deviceId + ".";
+                return res.status(201).send(JSON.stringify(responseJson));
+            } else {
 
-            for (let device of devices) {
-                if (device.apikey === req.body.apikey) {
+                var actType = ""
+                var temp = ""
+                var hum = ""
 
-                    var actType = "walking"
-                    var temp = "275"
-                    var hum = "30"
-
-                    let weatherJson = {
-                        url: "https://api.weatherbit.io/v2.0/current?&lat=" + req.body.lat + "&lon=" + req.body.lon + "key=f3c60cb1902c491bacae3ae61cf5169e",
-                        method: "GET"
-                    };
-
-
-                    //request('http://api.openweathermap.org/data/2.5/forecast?APPID=bb3fbce58cae213a3a83cf482ce85721', { json: true },
-                    request(weatherJson, function(err, res, body) {
-
-                        if (err) {
-                            let errorMsg = { "message": err };
-                            return res.status(400).json(errorMsg);
-                        }
-                        let weatherData = JSON.parse(body)
-                        var temp = weatherData.temp
-                        var hum = weatherData.rh
+                let weatherJson = {
+                    url: 'https://api.weatherbit.io/v2.0/current?&lat=' + req.body.lat + '&lon=' + req.body.lon + 'key=f3c60cb1902c491bacae3ae61cf5169e',
+                    method: 'GET'
+                };
 
 
-                    });
+                //request('http://api.openweathermap.org/data/2.5/forecast?APPID=bb3fbce58cae213a3a83cf482ce85721', { json: true },
+                request(weatherJson, function(err, res, body) {
 
-                    if (req.body.GPS_speed < 10) {
-                        actType = "walking"
-                    } else if (req.body.GPS_speed > 9 && req.body.GPS_speed < 20) {
-                        actType = "Running"
-                    } else {
-                        actType = "Biking"
-
+                    if (err) {
+                        let errorMsg = { "message": err };
+                        return res.status(400).json(errorMsg);
                     }
+                    let weatherData = JSON.parse(body)
+                    var temp = weatherData.data[0].temp
+                    var hum = weatherData.data[0].rh
 
 
-                    var newHwData = new HwData({
-                        deviceId: req.body.deviceId,
-                        userEmail: device.userEmail,
-                        longitude: req.body.lon,
-                        latitude: req.body.lat,
-                        GPSSpeed: req.body.GPS_speed,
-                        UVReading: req.body.uv,
-                        Temp: temp,
-                        Humd: hum,
-                        actType: actType
-                    });
+                });
 
-                    // Save device. If successful, return success. If not, return error message.                          
-                    newHwData.save(function(err, newHwData) {
-                        if (err) {
-                            responseJson.status = "ERROR";
-                            responseJson.message = "Error saving data in db.";
-                            return res.status(201).send(JSON.stringify(responseJson));
-                        } else {
-                            responseJson.status = "OK";
-                            responseJson.message = "Data saved in db with object ID " + newHwData._id + ".";
-                            return res.status(201).send(JSON.stringify(responseJson));
-                        }
-                    });
+                if (req.body.GPS_Speed < 10) {
+                    actType = "walking"
+                } else if (req.body.GPS_Speed > 9 && req.body.GPS_Speed < 20) {
+                    actType = "Running"
+                } else {
+                    actType = "Biking"
 
-
-                    // responseJson.status = "ERROR";
-                    // responseJson.message = "Invalid apikey for device ID " + req.body.deviceId + ".";
-                    // return res.status(201).send(JSON.stringify(responseJson));
                 }
-                // } else {
 
 
-                // }
+                var newHwData = new HwData({
+                    deviceId: req.body.deviceId,
+                    userEmail: device.userEmail,
+                    longitude: req.body.lon,
+                    latitude: req.body.lat,
+                    GPSSpeed: req.body.GPS_speed,
+                    UVReading: req.body.uv,
+                    Temp: temp,
+                    Humd: hum,
+                    actType: actType
+                });
 
-
-
-
-
-
+                // Save device. If successful, return success. If not, return error message.                          
+                newHwData.save(function(err, newHwData) {
+                    if (err) {
+                        responseJson.status = "ERROR";
+                        responseJson.message = "Error saving data in db.";
+                        return res.status(201).send(JSON.stringify(responseJson));
+                    } else {
+                        responseJson.status = "OK";
+                        responseJson.message = "Data saved in db with object ID " + newHwData._id + ".";
+                        return res.status(201).send(JSON.stringify(responseJson));
+                    }
+                });
             }
-
-
         } else {
             responseJson.status = "ERROR";
             responseJson.message = "Device ID " + req.body.deviceId + " not registered.";
