@@ -103,7 +103,7 @@ function responseReceiveHandler() {
 
 
 //         // window.localStorage.setItem("activityData", JSON.stringify(activityData))
-//         // window.location = "http://ec2-18-223-182-143.us-east-2.compute.amazonaws.com:3000/activities.html"
+//         // window.location = "activities.html"
 
 
 
@@ -127,9 +127,8 @@ $(function() {
     $("#uv").hide()
     $("#activities").hide()
     if (!window.localStorage.getItem("authToken")) {
-        window.location.replace("http://ec2-18-223-182-143.us-east-2.compute.amazonaws.com:3000/account.html");
+        window.location.replace("account.html");
     } else {
-
         getActivities2();
     }
 
