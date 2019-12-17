@@ -28,6 +28,8 @@ function getActivities2() {
         activity = JSON.parse(data[i])
         if (activity.GPSSpeed < 10) {
             walk += "<li class='collection-item'>" +
+
+                ///////continue editing
                 "Longitude: " + activity.longitude + ", Latitude: " + activity.latitude + ", Speed: " + activity.GPSSpeed + ", UV Reading: " + activity.UVReading +
                 "</li>";
         } else if (activity.GPSSpeed > 9 && activity.GPSSpeed < 20) {
