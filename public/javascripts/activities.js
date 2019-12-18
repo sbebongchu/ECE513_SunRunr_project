@@ -10,37 +10,37 @@ function getActivities2() {
     let walk = "<ul class='collection with-header'> "
     let run = "<ul class='collection with-header'> "
     let bike = "<ul class='collection with-header'> "
-        // Add the devices to the list before the list item for the add device button (link)
-        // responseJson.devices.push({
-        //     "deviceId": doc.deviceId,
-        //     "userEmail": Device.userEmail,
-        //     "longitude": doc.longitude,
-        //     "latitude": doc.latitude,
-        //     "GPSSpeed": doc.GPSSpeed,
-        //     "UVReading": doc.UVReading
-        //let i = 0
-        //for (var activity in data) {
-        //     //while (i < data.length) {
+    let totalUV = 0
+    let uv = []
+
+    let read = ""
     for (var i = 0; i < data.length; i++) {
         //walk += "<li>" + data[i] + "</li>"
 
 
         activity = JSON.parse(data[i])
+        totalUV += activity.UVReading;
+
+        // read = "{ y:" + activity.UVReading + " }"
+        // forecast.push(read)
+
         if (activity.GPSSpeed < 10) {
             walk += "<li class='collection-item'>" +
 
                 ///////continue editing
                 "Longitude: " + activity.longitude + ", Latitude: " + activity.latitude + ", Speed: " + activity.GPSSpeed + ", UV Reading: " + activity.UVReading +
-                "</li>";
+                ", Temperature: " + activity.Temp + "&deg;F" +
+                ", Humidity: " + activity.Humd + ", Activity Type: " + activity.actType + ", Activity Date: " + ((new Date()).getMonth() + 1) + "/" + (new Date()).getDay() + "/" + (new Date()).getFullYear() + "</li>";
         } else if (activity.GPSSpeed > 9 && activity.GPSSpeed < 20) {
             run += "<li class='collection-item'>" +
                 "Longitude: " + activity.longitude + ", Latitude: " + activity.latitude + ", Speed: " + activity.GPSSpeed + ", UV Reading: " + activity.UVReading +
-                "</li>";
+                ", Temperature: " + activity.Temp + "&deg;F" + ", Humidity: " + activity.Humd + ", Activity Type: " + activity.actType + "</li>";
         } else {
             bike += "<li class='collection-item'>" +
                 "Longitude: " + activity.longitude + ", Latitude: " + activity.latitude + ", Speed: " + activity.GPSSpeed + ", UV Reading: " + activity.UVReading +
-                "</li>";
+                ", Temperature: " + activity.Temp + "&deg;F" + ", Humidity: " + activity.Humd + ", Activity Type: " + activity.actType + "</li>";
         }
+        $("#totalUV").html("Total UV Exposure: " + totalUV)
         $("#walk").html(walk + "</ul>")
         $("#run").html(run + "</ul>")
         $("#bike").html(bike + "</ul>")
@@ -58,13 +58,38 @@ function getActivities2() {
 
     });
 
-    // $("#act").click(function(event) {
-    //     $("#activities").toggle()
 
+    // var chart = new CanvasJS.Chart("chartContainer", {
+    //     animationEnabled: true,
+    //     theme: "light2",
+    //     title: {
+    //         text: "Simple Line Chart"
+    //     },
+    //     axisY: {
+    //         includeZero: false
+    //     },
+    //     data: [{
+    //         type: "line",
+    //         dataPoints: forecast
+    // [
+    //     { y: 450 },
+    //     { y: 414 },
+    //     { y: 520, indexLabel: "highest", markerColor: "red", markerType: "triangle" },
+    //     { y: 460 },
+    //     { y: 450 },
+    //     { y: 500 },
+    //     { y: 480 },
+    //     { y: 480 },
+    //     { y: 410, indexLabel: "lowest", markerColor: "DarkSlateGrey", markerType: "cross" },
+    //     { y: 500 },
+    //     { y: 480 },
+    //     { y: 510 }
+    //             // ]
+    //     }]
     // });
-    // $("#uvReading").click(function(event) {
-    //     $("#uv").toggle()
-    // });
+    // chart.render();
+
+
 
 }
 
@@ -86,8 +111,12 @@ function getActivities3() {
 function responseReceiveHandler() {
     if (this.status === 200) {
 
-        var response = typeof(this.response[0])
-        $("#test").html(response)
+        //var response = typeof(this.response[0].value)
+        for (var i = 1; i < 6; i++) {
+            obj = this.response[i - 1].value
+            $("#day" + i).html(obj)
+
+        }
 
         $("#act").click(function(event) {
             $("#activities").toggle()

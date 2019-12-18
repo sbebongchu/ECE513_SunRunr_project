@@ -16,7 +16,7 @@
 
     <link href="stylesheets/holz.css" rel="stylesheet">
     <!-- <link href="stylesheets/sunRunr.css" rel="stylesheet"> -->
-
+    <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
     <script src="javascripts/activities.js"></script>
     <script src="javascripts/signout.js"></script>
 
@@ -59,7 +59,7 @@
                     </thead>
                     <tbody>
                         <tr>
-                            <td>Day1</td>
+                            <td>Today</td>
                             <td id="day1">val1</td>
                         </tr>
                         <tr>
@@ -97,6 +97,11 @@
                 <button id="act" class="waves-effect waves-teal btn">Activities</button>
             </li>
             <ul id="activities">
+                <li class="collection-item" id="totalUV"></li>
+
+                <li style="padding-left: 800px">
+                    <div id="chartContainer" style="height: 100px; width: 50%;"></div>
+                </li>
                 <li class="collection-item">
                     <button id="walking" class="waves-effect waves-light btn">Walking</button>
                     <div id="walk"></div>

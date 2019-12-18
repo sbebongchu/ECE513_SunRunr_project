@@ -29,7 +29,7 @@ function accountInfoSuccess(data, textSatus, jqXHR) {
             pingDevice(event, device.deviceId);
         });
         $("#activity-" + device.deviceId).click(function(event) {
-            getActivities(event, device.deviceId)
+            getActivities(event, device.deviceId, data.email)
 
         });
     }
@@ -69,7 +69,7 @@ function registerDevice() {
                 pingDevice(event, device.deviceId);
             });
             $("#activity-" + device.deviceId).click(function(event) {
-                getActivities(event, device.deviceId);
+                getActivities(event, device.deviceId, "");
 
             });
             hideAddDeviceForm();
@@ -208,7 +208,9 @@ function pingDevice(event, deviceId) {
 }
 
 
-function getActivities(event, deviceId) {
+function getActivities(event, deviceId, email) {
+
+
 
 
     $.ajax({
@@ -219,14 +221,21 @@ function getActivities(event, deviceId) {
         success: function(data, textStatus, jqXHR) {
             // activity = JSON.stringify(data.activities)
             // alert(activity[2])
-            $("#error").html(data.activities.length);
-            $("#error").show();
 
+            //let user = ""
             for (var i = 0; i < data.activities.length; i++) {
+                // $("#error").html(data.activities[i].userEmail);
+                // $("#error").show();
+                //user += data.activities[i].userEmail
 
-                activity = JSON.stringify(data.activities[i])
-                activityData.push(activity)
+                if (data.activities[i].userEmail === email) {
+                    activity = JSON.stringify(data.activities[i])
+                    activityData.push(activity)
+                }
+
+
             }
+
 
 
             // $("#data").html(typeof JSON.parse(activityData[0]))
