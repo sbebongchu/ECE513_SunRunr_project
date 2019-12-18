@@ -11,7 +11,9 @@ function getActivities2() {
     let run = "<ul class='collection with-header'> "
     let bike = "<ul class='collection with-header'> "
     let totalUV = 0
+    let totalSpeed = 0
     let uv = []
+    let duration = data.length * 15
 
     let read = ""
     for (var i = 0; i < data.length; i++) {
@@ -20,6 +22,7 @@ function getActivities2() {
 
         activity = JSON.parse(data[i])
         totalUV += activity.UVReading;
+        totalSpeed += activity.GPSSpeed;
 
         // read = "{ y:" + activity.UVReading + " }"
         // forecast.push(read)
@@ -27,20 +30,25 @@ function getActivities2() {
         if (activity.GPSSpeed < 10) {
             walk += "<li class='collection-item'>" +
 
-                ///////continue editing
-                "Longitude: " + activity.longitude + ", Latitude: " + activity.latitude + ", Speed: " + activity.GPSSpeed + ", UV Reading: " + activity.UVReading +
-                ", Temperature: " + activity.Temp + "&deg;F" +
-                ", Humidity: " + activity.Humd + ", Activity Type: " + activity.actType + ", Activity Date: " + ((new Date()).getMonth() + 1) + "/" + (new Date()).getDay() + "/" + (new Date()).getFullYear() + "</li>";
+                "<strong>Longitude</strong>: " + activity.longitude + ", <strong>Latitude</strong>: " + activity.latitude + ", <strong>Speed</strong>: " + activity.GPSSpeed + ", <strong>UV Reading</strong>: " + activity.UVReading +
+                "μW/cm2/step, <strong>Temperature</strong>: " + activity.Temp + "&deg;F" +
+                ", <strong>Humidity</strong>: " + activity.Humd + ", <strong>Activity Type</strong>: " + activity.actType + ", <strong>Activity Date</strong>: " + ((new Date()).getMonth() + 1) + "/" + (new Date()).getDay() + "/" + (new Date()).getFullYear() + "</li>";
         } else if (activity.GPSSpeed > 9 && activity.GPSSpeed < 20) {
             run += "<li class='collection-item'>" +
-                "Longitude: " + activity.longitude + ", Latitude: " + activity.latitude + ", Speed: " + activity.GPSSpeed + ", UV Reading: " + activity.UVReading +
-                ", Temperature: " + activity.Temp + "&deg;F" + ", Humidity: " + activity.Humd + ", Activity Type: " + activity.actType + "</li>";
+
+                "<strong>Longitude</strong>: " + activity.longitude + ", <strong>Latitude</strong>: " + activity.latitude + ", <strong>Speed</strong>: " + activity.GPSSpeed + ", <strong>UV Reading</strong>: " + activity.UVReading +
+                "μW/cm2/step, <strong>Temperature</strong>: " + activity.Temp + "&deg;F" +
+                ", <strong>Humidity</strong>: " + activity.Humd + ", <strong>Activity Type</strong>: " + activity.actType + ", <strong>Activity Date</strong>: " + ((new Date()).getMonth() + 1) + "/" + (new Date()).getDay() + "/" + (new Date()).getFullYear() + "</li>";
+
         } else {
+
             bike += "<li class='collection-item'>" +
-                "Longitude: " + activity.longitude + ", Latitude: " + activity.latitude + ", Speed: " + activity.GPSSpeed + ", UV Reading: " + activity.UVReading +
-                ", Temperature: " + activity.Temp + "&deg;F" + ", Humidity: " + activity.Humd + ", Activity Type: " + activity.actType + "</li>";
+
+                "<strong>Longitude</strong>: " + activity.longitude + ", <strong>Latitude</strong>: " + activity.latitude + ", <strong>Speed</strong>: " + activity.GPSSpeed + ", <strong>UV Reading</strong>: " + activity.UVReading +
+                "μW/cm2/step, <strong>Temperature</strong>: " + activity.Temp + "&deg;F" +
+                ", <strong>Humidity</strong>: " + activity.Humd + ", <strong>Activity Type</strong>: " + activity.actType + ", <strong>Activity Date</strong>: " + ((new Date()).getMonth() + 1) + "/" + (new Date()).getDay() + "/" + (new Date()).getFullYear() + "</li>";
         }
-        $("#totalUV").html("Total UV Exposure: " + totalUV)
+
         $("#walk").html(walk + "</ul>")
         $("#run").html(run + "</ul>")
         $("#bike").html(bike + "</ul>")
@@ -58,6 +66,16 @@ function getActivities2() {
 
     });
 
+
+    let avgSpeed = totalSpeed / data.length;
+    let distMiles = avgSpeed * duration * 0.000621371;
+    let caloriesBurned = 65 * distMiles
+
+    // let totals = "Total UV Exposure: " + totalUV + "  " + "  Total Calories Burned: " + caloriesBurned;
+
+    $("#totalDur").html("Total Activity Duration: " + (duration / 60) + "mins")
+    $("#totalUV").html("Total UV Exposure: " + totalUV + "μW/cm2/step")
+    $("#totalCal").html("Total Calories Burned: " + caloriesBurned + "cal")
 
     // var chart = new CanvasJS.Chart("chartContainer", {
     //     animationEnabled: true,
