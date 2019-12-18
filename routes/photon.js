@@ -56,9 +56,9 @@ router.post('/hit', function(req, res, next) {
             for (let device of devices) {
                 if (device.apikey === req.body.apikey) {
 
-                    var actType = "walking"
-                    var temp = "275"
-                    var hum = "30"
+                    let actType = "walking"
+                    let temp = "275"
+                    let hum = "30"
 
                     let weatherJson = {
                         url: "https://api.weatherbit.io/v2.0/current?&lat=" + req.body.lat + "&lon=" + req.body.lon + "key=f3c60cb1902c491bacae3ae61cf5169e",
@@ -73,9 +73,9 @@ router.post('/hit', function(req, res, next) {
                             let errorMsg = { "message": err };
                             return res.status(400).json(errorMsg);
                         }
-                        let weatherData = JSON.parse(body)
-                        var temp = weatherData.temp
-                        var hum = weatherData.rh
+                        weatherData = JSON.parse(body)
+                        temp = weatherData.temp
+                        hum = weatherData.rh
 
 
                     });

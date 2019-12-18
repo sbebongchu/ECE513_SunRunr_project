@@ -58,14 +58,21 @@ function getActivities2() {
 
     });
 
+    // $("#act").click(function(event) {
+    //     $("#activities").toggle()
 
+    // });
+    // $("#uvReading").click(function(event) {
+    //     $("#uv").toggle()
+    // });
 
 }
 
 function getActivities3() {
-    var endpoint = "http://api.openweathermap.org/data/2.5/forecast";
+    var endpoint = "http://api.openweathermap.org/data/2.5/uvi/forecast";
     var apikey = "bb3fbce58cae213a3a83cf482ce85721"
-    var queryString = "zip=85721" + "&units=imperial&appid=" + apikey;
+        //var queryString = "zip=85721" + "&units=imperial&appid=" + apikey;
+    var queryString = "lat=32.23&lon=-110.95" + "&units=imperial&appid=" + apikey;
     var url = endpoint + "?" + queryString;
 
     var xhr = new XMLHttpRequest();
@@ -79,6 +86,9 @@ function getActivities3() {
 function responseReceiveHandler() {
     if (this.status === 200) {
 
+        var response = typeof(this.response[0])
+        $("#test").html(response)
+
         $("#act").click(function(event) {
             $("#activities").toggle()
 
@@ -89,6 +99,9 @@ function responseReceiveHandler() {
         });
     }
 }
+
+
+
 // $.ajax({
 //     url: 'http://api.openweathermap.org/data/2.5/forecast?zip=85721,us&APPID=bb3fbce58cae213a3a83cf482ce85721',
 //     type: 'GET',
@@ -129,9 +142,10 @@ $(function() {
     $("#uv").hide()
     $("#activities").hide()
     if (!window.localStorage.getItem("authToken")) {
-        window.location.replace("account.html");
+        window.location.replace("http://ec2-18-223-182-143.us-east-2.compute.amazonaws.com:3000/account.html");
     } else {
         getActivities2();
+        getActivities3();
     }
 
 });
